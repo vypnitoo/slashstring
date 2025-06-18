@@ -1,0 +1,16 @@
+name: SlashString
+version: 1.0
+main: com.vypnito.slashstring.SlashString # Specifies the main plugin class
+api-version: 1.20.1 # Or 1.21 if available in the future. Paper is often compatible across minor versions.
+authors: [YourNameHere] # Optional: Add your name or alias
+description: A plugin to fill empty inventory slots with string items and manage them.
+commands:
+  string:
+    description: Fills empty inventory slots with string items.
+    usage: /string
+    permission: slashstring.use
+    permission-message: You don't have permission to use this command.
+permissions:
+  slashstring.use:
+    description: Allows players to use the /string command.
+    default: op # By default, only server operators can use this command.

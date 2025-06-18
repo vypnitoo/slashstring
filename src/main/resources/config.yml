@@ -1,0 +1,14 @@
+# Cooldown in seconds before a player can use the /string command again.
+cooldown_seconds: 3
+
+# Message sent to player when they are on cooldown. %seconds% will be replaced with remaining time.
+message_cooldown: "You are on cooldown! Please wait %seconds% seconds."
+
+# Message sent to player when their empty inventory slots have been filled.
+message_filled: "Your empty inventory slots have been filled with string."
+
+# Message sent to player if they have no empty inventory slots.
+message_no_empty_slots: "You have no empty inventory slots to fill."
+
+# Message logged when a string item is deleted on spawn.
+message_item_deleted: "A string item was deleted on spawn."

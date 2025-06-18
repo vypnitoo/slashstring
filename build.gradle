@@ -1,0 +1,55 @@
+plugins {
+    id 'java' // Standard Java plugin for Java projects
+    id 'com.github.johnrengelman.shadow' version '8.1.1' // Shadow plugin to package all dependencies into a single JAR
+}
+
+group 'com.vypnito'
+version '1.0' // Plugin version
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21) // Specifies Java 21 for compilation. Ensure your JDK is 21.
+    }
+}
+
+repositories {
+    mavenCentral() // Standard Maven central repository
+    // PaperMC's official Maven repository for Paper API
+    maven {
+        name = 'papermc-repo'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+    // Another common repository for Minecraft development, sometimes useful for snapshots
+    maven {
+        name = 'sonatype-snapshots'
+        url = 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+}
+
+dependencies {
+    // Paper API dependency.
+    // IMPORTANT: Check https://repo.papermc.io/repository/maven-public/io/papermc/paper/paper-api/
+    // for the exact latest version for Minecraft 1.21.
+    // As of current date (June 2025), a common format for 1.21 might be 1.21-R0.1-SNAPSHOT or a specific build number.
+    compileOnly 'io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT' // !!! REPLACE WITH ACTUAL 1.21 PAPER API VERSION !!!
+}
+
+// Configuration for the Shadow plugin. This creates a "fat JAR" with all dependencies.
+shadowJar {
+    archiveClassifier.set('') // Removes default classifier (e.g., "-all" or "-shadow") from the JAR name
+    destinationDirectory.set(file("${project.rootDir}/build/libs")) // Output directory for the shadowed JAR
+}
+
+// Configuration for the standard JAR task.
+jar {
+    archiveBaseName.set('SlashString') // Base name of the resulting JAR file
+    archiveVersion.set(project.version) // Sets the version of the plugin in the JAR name
+    destinationDirectory.set(file("${project.rootDir}/build/libs")) // Output directory for the JAR
+}
+
+// Ensures that the 'jar' task depends on 'shadowJar'.
+// This makes sure that when you run 'gradle build' or 'gradle jar', the 'shadowJar' task
+// runs first, producing the complete plugin JAR with all dependencies.
+tasks.jar {
+    dependsOn shadowJar
+}

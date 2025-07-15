@@ -38,7 +38,6 @@ public class StringCommand implements CommandExecutor {
 		long currentTime = System.currentTimeMillis();
 		long cooldownTime = config.getCooldownSeconds() * 1000L;
 
-		// Cooldown check
 		if (cooldowns.containsKey(playerUUID)) {
 			long lastUsed = cooldowns.get(playerUUID);
 			long timeLeft = (lastUsed + cooldownTime) - currentTime;
@@ -54,13 +53,9 @@ public class StringCommand implements CommandExecutor {
 		PlayerInventory inventory = player.getInventory();
 		boolean filledAnySlot = false;
 
-		// Iterate through the main inventory slots (0-35).
-		// Slots 0-8 are hotbar, 9-35 are main inventory.
-		// Slots 36-39 are armor, 40 is off-hand. We explicitly exclude these.
-		for (int i = 0; i <= 35; i++) { // Loop only for main inventory and hotbar
+		for (int i = 0; i <= 35; i++) {
 			ItemStack item = inventory.getItem(i);
 			if (item == null || item.getType() == Material.AIR) {
-				// Fill with a full stack of 64 string.
 				inventory.setItem(i, new ItemStack(Material.STRING, 64));
 				filledAnySlot = true;
 			}
